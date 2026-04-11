@@ -1,0 +1,25 @@
+# =============================================================================
+# Cloudflare Tunnel (cloudflared) — ví dụ cho trohub.online
+# =============================================================================
+# 1) Tạo tunnel:  cloudflared tunnel create trohub
+# 2) Lưu credentials JSON (Cloudflare chỉ định đường dẫn), sửa dòng credentials-file bên dưới.
+# 3) Gán DNS (một lần):  cloudflared tunnel route dns trohub trohub.online
+#                         cloudflared tunnel route dns trohub api.trohub.online
+#    (hoặc thêm Public Hostname trong Zero Trust → Networks → Tunnels.)
+# 4) Chạy thử:  cloudflared tunnel --config /path/to/config.yml run
+# 5) Cài service:  sudo cloudflared service install (xem docs Cloudflare cho đường dẫn config trên Ubuntu)
+#
+# Docker phải đang publish 8080 và 5001 trên localhost (docker compose up).
+# =============================================================================
+
+tunnel: REPLACE_WITH_TUNNEL_UUID
+credentials-file: /home/ubuntu/.cloudflared/REPLACE_TUNNEL_UUID.json
+
+ingress:
+  - hostname: trohub.online
+    service: http://127.0.0.1:8080
+  - hostname: www.trohub.online
+    service: http://127.0.0.1:8080
+  - hostname: api.trohub.online
+    service: http://127.0.0.1:5001
+  - service: http_status:404

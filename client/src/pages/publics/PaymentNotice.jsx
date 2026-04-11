@@ -3,13 +3,61 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import pathnames from "@/lib/pathnames"
 import { BadgeCheck, CircleX } from "lucide-react"
 import Confetti from "react-confetti"
-import { useNavigate, useParams } from "react-router-dom"
+import { useEffect, useMemo, useState } from "react"
+import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { useWindowSize } from "react-use"
+
+/**
+ * MoMo redirectUrl nên là GET /api/v1/payment/momo-return (backend xử lý rồi redirect /thanh-toan/00).
+ * Nếu env cũ trỏ thẳng /thanh-toan/?... thì chuyển hướng lên API một lần.
+ */
+function useMomoReturnRedirect() {
+  const [done, setDone] = useState(false)
+  useEffect(() => {
+    const path = window.location.pathname.replace(/\/+$/, "") || "/"
+    const parts = path.split("/").filter(Boolean)
+    const ti = parts.indexOf("thanh-toan")
+    const pathCode = ti >= 0 && parts[ti + 1] ? parts[ti + 1] : undefined
+    const sp = new URLSearchParams(window.location.search)
+    const looksLikeMomoReturn =
+      Boolean(sp.get("partnerCode")) &&
+      Boolean(sp.get("orderId")) &&
+      (sp.get("resultCode") !== null || sp.get("message") !== null)
+    if (looksLikeMomoReturn && !pathCode) {
+      const base = (import.meta.env.VITE_SERVER_URL || "").replace(/\/+$/, "")
+      if (base) {
+        window.location.replace(`${base}/payment/momo-return?${sp.toString()}`)
+        return
+      }
+    }
+    setDone(true)
+  }, [])
+  return done
+}
 
 const PaymentNotice = () => {
   const { width, height } = useWindowSize()
-  const { code } = useParams()
+  const { code: codeParam } = useParams()
+  const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+  const momoRedirectDone = useMomoReturnRedirect()
+
+  const code = useMemo(() => {
+    if (codeParam === "00" || codeParam === "02") return codeParam
+    const rc = searchParams.get("resultCode")
+    if (rc === "0" || rc === "9000") return "00"
+    if (rc != null && rc !== "") return "02"
+    return codeParam
+  }, [codeParam, searchParams])
+
+  if (!momoRedirectDone) {
+    return (
+      <div className="min-h-screen bg-muted/40 grid place-content-center p-4 text-muted-foreground text-sm">
+        Đang xử lý kết quả thanh toán…
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-muted/40 grid place-content-center p-4">
       {code === "00" && (
@@ -40,7 +88,7 @@ const PaymentNotice = () => {
           </CardFooter>
         </Card>
       )}
-      {code !== "00" && (
+      {code && code !== "00" && (
         <Card>
           <CardHeader className="grid place-content-center pb-2">
             <CardTitle className="my-4 grid place-content-center">
@@ -55,6 +103,21 @@ const PaymentNotice = () => {
             <Button onClick={() => navigate("/" + pathnames.user.layout + pathnames.user.balanceInfo)}>
               Về trang cá nhân
             </Button>
+          </CardFooter>
+        </Card>
+      )}
+      {!code && (
+        <Card>
+          <CardHeader>
+            <CardDescription className="text-lg font-semibold">Không tìm thấy trạng thái thanh toán</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-center text-muted-foreground text-sm">
+              Hãy mở link sau khi hoàn tất thanh toán, hoặc vào mục nạp tiền / lịch sử giao dịch.
+            </p>
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <Button onClick={() => navigate("/")}>Về trang chủ</Button>
           </CardFooter>
         </Card>
       )}
