@@ -5,16 +5,16 @@ import routes from "./routes"
 import { GoogleOAuthProvider } from "@react-oauth/google"
 
 const googleClientId = (import.meta.env.VITE_CLIENT_GG_ID || "").trim()
-if (!googleClientId && import.meta.env.DEV) {
+if (!googleClientId) {
   console.warn(
-    "[TroHub] Thiếu VITE_CLIENT_GG_ID — đăng nhập Google sẽ lỗi. Thêm biến này vào .env và rebuild."
+    "[TroHub] Không có VITE_CLIENT_GG_ID — đăng nhập Google tắt. Thêm biến khi build và Authorized JS origins trong Google Cloud Console."
   )
 }
 
 const router = createBrowserRouter(routes)
 
+const app = <RouterProvider router={router} />
+
 createRoot(document.getElementById("root")).render(
-  <GoogleOAuthProvider clientId={googleClientId}>
-    <RouterProvider router={router} />
-  </GoogleOAuthProvider>
+  googleClientId ? <GoogleOAuthProvider clientId={googleClientId}>{app}</GoogleOAuthProvider> : app
 )

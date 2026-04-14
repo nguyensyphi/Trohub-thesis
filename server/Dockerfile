@@ -7,9 +7,10 @@ RUN npm ci
 
 COPY . .
 
-RUN chmod +x docker-entrypoint.sh
+# Windows checkouts may use CRLF; strip \r so the entrypoint runs in Linux containers
+RUN sed -i 's/\r$//' docker-entrypoint.sh && chmod +x docker-entrypoint.sh
 
 ENV NODE_ENV=production
 EXPOSE 5001
 
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["sh", "./docker-entrypoint.sh"]

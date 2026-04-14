@@ -21,10 +21,27 @@ const app = express()
 
 app.use(helmet())
 app.use(morgan("combined"))
+
+/** Chuẩn hoá origin (bỏ / cuối) để khớp header Origin của trình duyệt. Hỗ trợ nhiều origin cách nhau bởi dấu phẩy. */
+function parseClientOrigins() {
+  const raw = process.env.CLIENT_URL || ""
+  return raw
+    .split(",")
+    .map((s) => s.trim().replace(/\/+$/, ""))
+    .filter(Boolean)
+}
+
+const allowedOrigins = parseClientOrigins()
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
-    methods: ["POST", "GET", "PATCH", "DELETE", "PUT"],
+    origin(origin, callback) {
+      if (!origin) return callback(null, true)
+      const normalized = origin.replace(/\/+$/, "")
+      if (allowedOrigins.length === 0) return callback(null, false)
+      if (allowedOrigins.includes(normalized)) return callback(null, true)
+      return callback(null, false)
+    },
+    methods: ["POST", "GET", "PATCH", "DELETE", "PUT", "OPTIONS"],
   })
 )
 app.use(express.json({ limit: "10mb" }))

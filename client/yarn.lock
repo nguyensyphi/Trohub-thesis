@@ -1468,7 +1468,7 @@ client-only@^0.0.1:
   version "0.0.0"
   resolved "file:"
   dependencies:
-    "@hookform/resolvers" "^3.9.0"
+    "@hookform/resolvers" "^3.10.0"
     "@paypal/react-paypal-js" "^8.7.0"
     "@radix-ui/react-checkbox" "^1.1.1"
     "@radix-ui/react-collapsible" "^1.1.0"
@@ -1520,7 +1520,7 @@ client-only@^0.0.1:
     tailwind-merge "^2.5.2"
     tailwindcss-animate "^1.0.7"
     uniqid "^5.4.0"
-    zod "^3.23.8"
+    zod "^3.25.76"
     zustand "^4.5.5"
 
 clone@^2.1.1:

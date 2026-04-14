@@ -12,7 +12,7 @@ const pathnames = {
     news: "tin-tuc",
     detailNews__id: "chi-tiet-tin-tuc/:id",
     detailNews: "chi-tiet-tin-tuc/",
-    payment__status: "thanh-toan/:code",
+    payment__status: "thanh-toan/:code?",
     resetPassword: "Reset-mat-khau",
     updatePassword: "cap-nhat-mat-khau",
   },

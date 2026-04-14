@@ -3,6 +3,11 @@ const db = require("../models")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
 
+function normalizeEmail(value) {
+  if (value == null || typeof value !== "string") return ""
+  return value.trim().toLowerCase()
+}
+
 module.exports = {
   registerWithPhone: asyncHandler(async (req, res) => {
     const { fullname, password, phone } = req.body
@@ -24,7 +29,8 @@ module.exports = {
   }),
 
   registerWithEmail: asyncHandler(async (req, res) => {
-    const { fullname, password, email } = req.body
+    const { fullname, password, email: rawEmail } = req.body
+    const email = normalizeEmail(rawEmail)
 
     const alreadyUser = await db.User.findOne({ where: { email }, raw: true })
     if (alreadyUser)
@@ -67,7 +73,8 @@ module.exports = {
   }),
 
   loginWithEmail: asyncHandler(async (req, res) => {
-    const { password, email } = req.body
+    const { password, email: rawEmail } = req.body
+    const email = normalizeEmail(rawEmail)
 
     const alreadyUser = await db.User.findOne({ where: { email }, raw: true })
 
@@ -92,7 +99,8 @@ module.exports = {
   }),
 
   loginWithGoogle: asyncHandler(async (req, res) => {
-    const { fullname, avatar, email, password } = req.body
+    const { fullname, avatar, email: rawEmail, password } = req.body
+    const email = normalizeEmail(rawEmail)
 
     const alreadyUser = await db.User.findOne({ where: { email } })
 
