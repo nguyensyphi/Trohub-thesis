@@ -61,7 +61,7 @@ if (-not $KeepEnv) {
         $momoIpn = ""
     }
     $lines = @(
-        "POSTGRES_DB=phongtroxanh",
+        "POSTGRES_DB=trohub",
         "POSTGRES_USER=postgres",
         "POSTGRES_PASSWORD=$pgPass",
         "",
