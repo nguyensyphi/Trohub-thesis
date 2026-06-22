@@ -48,7 +48,7 @@ Tạo database mới bằng `psql`:
 psql -U postgres
 
 # Tạo database
-CREATE DATABASE phongtroxanh;
+CREATE DATABASE trohub;
 ```
 
 > **Lưu ý:** Ghi nhớ `username` và `password` PostgreSQL để điền vào file `.env` ở bước sau.
