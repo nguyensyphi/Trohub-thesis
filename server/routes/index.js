@@ -5,9 +5,9 @@ const payment = require("./payment.route")
 const post = require("./post.route")
 const news = require("./news.route")
 const order = require("./order.route")
-const chatbot = require("./chatbot.route")
-const room = require("./room.route")
-const bill = require("./bill.route")
+// const chatbot = require("./chatbot.route")  // feature added after thesis defense
+// const room = require("./room.route")          // feature added after thesis defense
+// const bill = require("./bill.route")           // feature added after thesis defense
 
 const initRoutes = (app) => {
   app.use("/api/v1/user", user)
@@ -16,9 +16,9 @@ const initRoutes = (app) => {
   app.use("/api/v1/news", news)
   app.use("/api/v1/post", post)
   app.use("/api/v1/payment", payment)
-  app.use("/api/v1/chatbot", chatbot)
-  app.use("/api/v1/room", room)
-  app.use("/api/v1/bill", bill)
+  // app.use("/api/v1/chatbot", chatbot)  // feature added after thesis defense
+  // app.use("/api/v1/room", room)          // feature added after thesis defense
+  // app.use("/api/v1/bill", bill)           // feature added after thesis defense
 
   app.use(badRequestException)
   app.use(errHandler)
