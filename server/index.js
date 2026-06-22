@@ -69,7 +69,7 @@ cron.schedule("16 20 * * *", async () => {
             fullname: expiredPosts[i].postedBy?.fullname,
           })
           const mailOptions = {
-            from: `"REST06 v2" <${process.env.SMTP_USER}>`,
+            from: `"TroHub" <${process.env.SMTP_USER}>`,
             to: expiredPosts[i].postedBy?.email,
             subject: "Thông báo",
             html: emailContent,
