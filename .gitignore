@@ -3,3 +3,17 @@
 .env
 client_secret_*.json
 .env.docker
+
+# Windows temp files
+~$*
+*.lnk
+
+# Editor
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.txt

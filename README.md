@@ -1,51 +1,155 @@
-# Hướng dẫn cài đặt chạy web trên máy tính Local
+# 🏠 TroHub — Nền tảng cho thuê phòng trọ trực tuyến
 
-Để chạy được web phải cần 3 yếu tố:
+> **Luận văn tốt nghiệp** — Hệ thống đăng tin và quản lý phòng trọ cho thuê sử dụng React.js + Node.js + PostgreSQL.
 
-- 1 postgres server - database chạy local _(Cái này lên mạng tải postgressql về máy và cài đặt như bình thường.)_
-- 1 server _(xử lý logic phía sau trang web)_
-- 1 client _(hiển thị giao diện UI)_
+---
 
-### 1. Cài đặt server postgres - Database
+## 📋 Tài liệu đính kèm
 
-Truy cập vào link [download này](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) để tại postgres vê. Sau đó cài đặt bình thường nếu chưa có postgres trên máy, có thể xem hướng dẫn trên mạng.
-Lúc cài cần nhớ username và password đẻ truy cập vào server. Thường thì username là `postgres` nếu không tự custom gì, còn mật khẩu thì từ đặt.
+| Tài liệu | Mô tả |
+|---|---|
+| 📄 `1ReportThesis_NSPhi_final_ver_3_edit1.pdf` | Báo cáo luận văn (PDF) |
+| 📖 `README.md` | Hướng dẫn cài đặt và chạy dự án |
 
-_NOTE: Sau khi cài xong check xem postgres server đã chạy lên chưa, vào services cúa máy để tìm, nếu chưa running thì start nó lên_
+---
 
-Tiếp theo, cần tạo một database postgres và đặt tên cho nó. Tên gì cũng được ví dụ `phongtroxanh`. Các bước tạo mới 1 DB thì có thể google hoặc làm theo như sau:
+## 🛠️ Công nghệ sử dụng
 
-- Tìm kiếm trên máy `psql` _(cái này sẽ được cài trong lúc cài postgres server)_, mở `psql` lên, sau đó cứ bấm `Enter` cho tới khi nó bắt nhập `password` thì nhập vào _(lưu ý, lúc nhập mật khẩu nó không hiện đâu, cứ nhập đúng mk rồi `Enter` là được, có thể gg)._
-- Sau khi đăng nhập xong, gõ câu lệnh sau để tạo mới database: `CREATE DATABASE phongtroxanh;`, trong đó `phongtroxanh` là tên database, đặt sao cũng được.
+| Layer | Công nghệ |
+|---|---|
+| **Frontend** | React.js, Vite, TailwindCSS |
+| **Backend** | Node.js, Express.js |
+| **Database** | PostgreSQL, Sequelize ORM |
+| **Deploy** | Docker, Cloudflare Tunnel |
+| **Auth** | JWT, Google OAuth2 |
+| **Payment** | VNPay, Momo, PayPal |
 
-### 2. Cài và chạy server nodejs
+---
 
-Khúc này nếu máy chưa có cài nodejs thì tải và cài trước nhé. Có thể vào terminal và chạy lệnh `node -v` để check xem có node chưa và `npm -v` để check xem có cài `npm` chưa.
+## ⚙️ Hướng dẫn cài đặt & chạy Local
 
-Sau khi đã cài nodejs (npm) thì có thể dùng luôn npm, không cần cài thêm yarn.
+Để chạy được web cần 3 thành phần:
+- **PostgreSQL** — Database server
+- **Server** — Node.js backend (xử lý logic)
+- **Client** — React.js frontend (giao diện)
 
-Mở source code lên, **mở terminal đứng tại forder server**.
+---
 
-Trước tiên chạy lệnh `npm install` để tải thư viện cần thiết.
+### 1. Cài đặt PostgreSQL — Database
 
-Trong forder server, tạo một file mới đặt tên là `.env`, sau đó mở file `.env.example` lên và copy hết trong đó đem qua paste lại vào file `.env`.
+Tải PostgreSQL tại: https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 
-Sau đó, điền hết thông tin vào file `.env`.
+Sau khi cài, kiểm tra PostgreSQL đã chạy trong **Services** của máy. Nếu chưa, start nó lên.
 
-Tiếp theo, mở terminal forder server chạy server lên bằng lệnh: `npm run dev`.
+Tạo database mới bằng `psql`:
 
-Sau khi server chạy lên thành công thì tới bước khởi tạo bảng cho database, và insert dữ liệu `npm run mockup`.
+```bash
+# Mở psql, nhập password khi được yêu cầu
+psql -U postgres
 
-Kết thúc chạy thàng công server
+# Tạo database
+CREATE DATABASE phongtroxanh;
+```
 
-### 3. Chạy client Reactjs
+> **Lưu ý:** Ghi nhớ `username` và `password` PostgreSQL để điền vào file `.env` ở bước sau.
 
-Mở source code lên, **mở terminal đứng tại forder client**.
+---
 
-Trước tiên chạy lệnh `npm install` để tải thư viện cần thiết.
+### 2. Cài đặt & chạy Server (Node.js)
 
-Tiếp theo, mở terminal forder client chạy server lên bằng lệnh: `npm run dev`.
+Kiểm tra Node.js và npm đã cài:
 
-Tương tự server, client cũng có file .env, tạo file .evn ở client forder
+```bash
+node -v
+npm -v
+```
 
-Truy cập `http://localhost:5173` để mở website.
+**Bước 1** — Mở terminal tại thư mục `server/`, cài thư viện:
+
+```bash
+cd server
+npm install
+```
+
+**Bước 2** — Tạo file cấu hình môi trường:
+
+```bash
+# Copy file mẫu
+cp .env.example .env
+```
+
+Mở file `server/.env` và điền đầy đủ thông tin (DB host, port, username, password, các API key...).
+
+**Bước 3** — Chạy server:
+
+```bash
+npm run dev
+```
+
+**Bước 4** — Khởi tạo bảng và dữ liệu mẫu:
+
+```bash
+npm run mockup
+```
+
+✅ Server chạy thành công!
+
+---
+
+### 3. Cài đặt & chạy Client (React.js)
+
+**Bước 1** — Mở terminal tại thư mục `client/`, cài thư viện:
+
+```bash
+cd client
+npm install
+```
+
+**Bước 2** — Tạo file cấu hình môi trường:
+
+Tạo file `client/.env` và điền thông tin cần thiết (xem `.env.example` nếu có).
+
+**Bước 3** — Chạy client:
+
+```bash
+npm run dev
+```
+
+**Bước 4** — Mở trình duyệt và truy cập:
+
+```
+http://localhost:5173
+```
+
+✅ Website chạy thành công!
+
+---
+
+## 🐳 Chạy bằng Docker (tuỳ chọn)
+
+```bash
+# Copy file cấu hình môi trường Docker
+cp .env.docker.example .env
+
+# Chạy toàn bộ stack
+docker-compose up -d
+```
+
+---
+
+## 📁 Cấu trúc thư mục
+
+```
+TroHub/
+├── client/          # React.js frontend
+├── server/          # Node.js backend
+├── deploy/          # Cấu hình deploy (Docker, Cloudflare)
+├── docker-compose.yml
+└── README.md
+```
+
+---
+
+## 👨‍💻 Tác giả
+
+**Nguyễn Sỹ Phi** — Luận văn tốt nghiệp

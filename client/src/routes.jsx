@@ -36,6 +36,8 @@ const ManagePost = lazy(() => import("./pages/owners/ManagePost"))
 const OwnerLayout = lazy(() => import("./pages/owners/OwnerLayout"))
 const PaymentHistory = lazy(() => import("./pages/owners/PaymentHistory"))
 const ManageOrder = lazy(() => import("./pages/owners/ManageOrder"))
+const ManageRooms = lazy(() => import("./pages/owners/ManageRooms"))
+const ManageBills = lazy(() => import("./pages/owners/ManageBills"))
 
 /* USERS */
 const ChangeEmail = lazy(() => import("./pages/users/ChangeEmail"))
@@ -185,6 +187,14 @@ const routes = [
           {
             path: pathnames.owner.manageOrder,
             element: withSuspense(ManageOrder),
+          },
+          {
+            path: pathnames.owner.manageRooms,
+            element: withSuspense(ManageRooms),
+          },
+          {
+            path: pathnames.owner.manageBills,
+            element: withSuspense(ManageBills),
           },
         ],
       },

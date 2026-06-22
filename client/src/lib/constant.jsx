@@ -1,4 +1,4 @@
-import { FilePenLine, LayoutList, Newspaper, ReceiptText, UserRound, UsersRound, Wallet } from "lucide-react"
+import { DoorOpen, FilePenLine, LayoutList, Newspaper, ReceiptText, UserRound, UsersRound, Wallet, Zap } from "lucide-react"
 import pathnames from "./pathnames"
 
 export const navigations = [
@@ -105,6 +105,20 @@ export const ownerMenu = [
     label: "Quản lý hóa đơn",
     path: pathnames.owner.layout + pathnames.owner.manageOrder,
     icon: <ReceiptText size="14" />,
+    hasSubs: false,
+  },
+  {
+    id: -21,
+    label: "Quản lý phòng trọ",
+    path: pathnames.owner.layout + pathnames.owner.manageRooms,
+    icon: <DoorOpen size="14" />,
+    hasSubs: false,
+  },
+  {
+    id: -22,
+    label: "Hóa đơn điện nước",
+    path: pathnames.owner.layout + pathnames.owner.manageBills,
+    icon: <Zap size="14" />,
     hasSubs: false,
   },
   {

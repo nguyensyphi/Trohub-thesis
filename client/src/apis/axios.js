@@ -97,6 +97,22 @@ export const endpoints = {
     endpoints: "/chatbot/endpoint",
     search: "/chatbot/search",
   },
+  room: {
+    getAll: "/room/all",
+    create: "/room/new",
+    update: "/room/",
+    delete: "/room/",
+  },
+  bill: {
+    getAll: "/bill/all",
+    getOne: "/bill/one/",
+    readings: "/bill/readings",
+    summary: "/bill/summary",
+    createReading: "/bill/reading/new",
+    ocr: "/bill/ocr",
+    updateStatus: "/bill/",
+    deleteBill: "/bill/",
+  },
   admin: {
     createNews: "/news/new",
     getNewsAdmin: "/news/admin",

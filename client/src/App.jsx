@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { useMeStore } from "./zustand/useMeStore"
 import { Toaster } from "@/components/ui/sonner"
 import { apiUpdateViews } from "./apis/user"
+import { ChatbotWidget } from "@/components/chatbot"
 
 const App = () => {
   const { getMe, token } = useMeStore()
@@ -23,8 +24,10 @@ const App = () => {
     <main className="relative font-sans">
       <Outlet />
       <Toaster position="top-center" expand={false} richColors />
+      <ChatbotWidget />
     </main>
   )
 }
 
 export default App
+

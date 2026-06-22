@@ -35,6 +35,8 @@ const pathnames = {
     managePost: "quan-ly-tin-dang",
     layout: "chu-tro/",
     manageOrder: "quan-ly-hoa-don",
+    manageRooms: "quan-ly-phong",
+    manageBills: "hoa-don-dien-nuoc",
   },
   paymentOnBoarding: "/thanh-toan-paypal",
   admin: {

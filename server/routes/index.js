@@ -5,6 +5,9 @@ const payment = require("./payment.route")
 const post = require("./post.route")
 const news = require("./news.route")
 const order = require("./order.route")
+const chatbot = require("./chatbot.route")
+const room = require("./room.route")
+const bill = require("./bill.route")
 
 const initRoutes = (app) => {
   app.use("/api/v1/user", user)
@@ -13,9 +16,13 @@ const initRoutes = (app) => {
   app.use("/api/v1/news", news)
   app.use("/api/v1/post", post)
   app.use("/api/v1/payment", payment)
+  app.use("/api/v1/chatbot", chatbot)
+  app.use("/api/v1/room", room)
+  app.use("/api/v1/bill", bill)
 
   app.use(badRequestException)
   app.use(errHandler)
 }
 
 module.exports = initRoutes
+
